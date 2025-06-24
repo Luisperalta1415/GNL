@@ -16,15 +16,16 @@
 # include <stdio.h>
 
 char	*get_next_line(int fd);
-int		read_to_buffer(int fd, char **buffer);
-char	*extract_line(char **buffer);
-void	update_buffer(char **buffer);
-void	free_buffer(char **buffer);
+char	*ft_extract_line(char *res);
+char	*ft_save_remainder(char *res);
 
 size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
+char	*ft_strchr(const char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
 #endif

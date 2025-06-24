@@ -59,10 +59,10 @@ char *ft_substr(char *s, unsigned int start, size_t len)
 {
 	char	*dest;
 
-	if (start > ft_strlen(s))
+	/*if (start > ft_strlen(s))
 		return(ft_strdup("")); //se puede hacer con *dest = 0;?
 	if ((start + len) > ft_strlen(s))
-		len = ft_strlen(s) - start;
+		len = ft_strlen(s) - start;*/
 	dest = (char *) malloc (len + 1 * sizeof (char *));
 	if (!dest)
 		return(NULL);
