@@ -45,17 +45,20 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 		return(ft_strdup(s2));
 	if (!s2)
+	{
+		free(s1);
 		return(ft_strdup(s1));
+	}
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	dest = (char *) malloc (len * sizeof (char));
 	if (!dest)
 		return(NULL);
-	while (*s1)
-		*dest++ = *s1++;
-	while (*s2)
-		*dest++ = *s2++;
-	*dest = 0;
-	dest -= len;
+	dest[len] = 0;
+	while (s2[len--])
+		dest[len] = s2[len];
+	while (s1[len--])
+		dest[len] = s1[len];
+	free(s1);
 	return (dest);
 }
 
