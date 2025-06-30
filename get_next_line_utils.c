@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	size_t	len;
+	int	len;
 
 	len = 0;
 	while (*s++)
@@ -22,11 +22,8 @@ size_t	ft_strlen(const char *s)
 	return(len);
 }
 
-char	*ft_strchr(const char *s)
+char	*ft_strchr(char *str)
 {
-	char	*str;
-
-	str = (char *)s;
 	if (!str)
 		return (NULL);
 	while (*str)
@@ -50,7 +47,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2)
 		return(ft_strdup(s1));
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	dest = (char *) malloc (len * sizeof (char *));
+	dest = (char *) malloc (len * sizeof (char));
 	if (!dest)
 		return(NULL);
 	while (*s1)
@@ -62,7 +59,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (dest);
 }
 
-char *ft_substr(char *s, unsigned int start, size_t len)
+char *ft_substr(char *s, int start, int len)
 {
 	char	*dest;
 
@@ -70,7 +67,7 @@ char *ft_substr(char *s, unsigned int start, size_t len)
 		return(ft_strdup("")); //se puede hacer con *dest = 0;?*/
 	if ((start + len) > ft_strlen(s))
 		len = ft_strlen(s) - start;
-	dest = (char *) malloc (len + 1 * sizeof (char *));
+	dest = (char *) malloc (len + 1 * (sizeof (char)));
 	if (!dest)
 		return(NULL);
 
@@ -83,15 +80,14 @@ char *ft_substr(char *s, unsigned int start, size_t len)
 char	*ft_strdup(const char *s)
 {
 	char	*str;
-	size_t 	len;
+	int 	len;
 
-	len = ft_strlen(s) + 1;
-	str = (char *) malloc (len * sizeof(char *));
+	len = ft_strlen(s);
+	str = (char *) malloc (len * sizeof(char) + 1);
 	if (!str)
 		return(NULL);
-	str[len - 1] = 0;
-	while (--len)
-			str[len] = s[len];
+	while (len--)
+		str[len] = s[len];
 	return(str);
 }
 // Por qué no puedo usar memchr, (bloques de memoria?)

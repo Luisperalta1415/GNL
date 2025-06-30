@@ -81,11 +81,11 @@ char	*get_next_line(int fd)
 int main(void)
 {
 	int		fd;
-	char	*line;
 
 	fd = open("mariallora.txt", O_RDONLY);
 	if (fd < 0)
 		return(0);
+	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	return(0);
