@@ -17,9 +17,9 @@ int	ft_strlen(const char *s)
 	int	len;
 
 	len = 0;
-	while (*s++)
+	while (s && s[len])
 		len++;
-	return(len);
+	return (len);
 }
 
 char	*ft_strchr(char *str)
@@ -32,37 +32,37 @@ char	*ft_strchr(char *str)
 			return (str);
 		str++;
 	}
-	return(NULL);
+	return (NULL);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
 	int		len;
 	char	*dest;
+	int		i;
+	int		j;
 
 	if (!s1 && !s2)
 		return(NULL);
 	if (!s1)
 		return(ft_strdup(s2));
-	if (!s2)
-	{
-		free(s1);
-		return(ft_strdup(s1));
-	}
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	dest = (char *) malloc (len * sizeof (char));
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	dest = (char *) malloc ((len +1) * sizeof (char));
 	if (!dest)
 		return(NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		dest[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		dest[j++] = s2[i++];
 	dest[len] = 0;
-	while (s2[len--])
-		dest[len] = s2[len];
-	while (s1[len--])
-		dest[len] = s1[len];
 	free(s1);
 	return (dest);
 }
-
-char *ft_substr(char *s, int start, int len)
+char	*ft_substr(char *s, int start, int len)
 {
 	char	*dest;
 
@@ -72,25 +72,28 @@ char *ft_substr(char *s, int start, int len)
 		len = ft_strlen(s) - start;
 	dest = (char *) malloc (len + 1 * (sizeof (char)));
 	if (!dest)
-		return(NULL);
-
+		return (NULL);
 	dest[start + len] = 0;
-	while (s[start + len] && len--)
+	while (s[start + len] && len)
+	{
+		len --;
 		dest[len] = s[start + len];
-	return(dest);  
+	}
+	return (dest);
 }
 
 char	*ft_strdup(const char *s)
 {
 	char	*str;
-	int 	len;
+	int		len;
 
 	len = ft_strlen(s);
 	str = (char *) malloc (len * sizeof(char) + 1);
 	if (!str)
-		return(NULL);
+		return (NULL);
+	str[len] = 0;
 	while (len--)
 		str[len] = s[len];
-	return(str);
+	return (str);
 }
 // Por qué no puedo usar memchr, (bloques de memoria?)
