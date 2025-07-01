@@ -74,7 +74,7 @@ char	*ft_substr(char *s, int start, int len)
 	if (!dest)
 		return (NULL);
 	dest[start + len] = 0;
-	while (s[start + len] && len)
+	while (s[start + len-1] && len)
 	{
 		len --;
 		dest[len] = s[start + len];
