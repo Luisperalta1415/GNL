@@ -24,7 +24,7 @@ char	*ft_save_remainder(char *res);
 int		ft_strlen(const char *s);
 char	*ft_strchr(char *s);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char *s, int start, int len);
+char	*ft_substr(char *s, int len);
 char	*ft_strdup(const char *s);
 
 #ifndef BUFFER_SIZE

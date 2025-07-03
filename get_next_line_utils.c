@@ -62,22 +62,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (dest);
 }
-char	*ft_substr(char *s, int start, int len)
+char	*ft_substr(char *s, int len)
 {
 	char	*dest;
 
-	/*if (start > ft_strlen(s))
-		return(ft_strdup("")); //se puede hacer con *dest = 0;?*/
-	if ((start + len) > ft_strlen(s))
-		len = ft_strlen(s) - start;
-	dest = (char *) malloc (len + 1 * (sizeof (char)));
+	dest = malloc (len + 1 * (sizeof (char)));
 	if (!dest)
 		return (NULL);
-	dest[start + len] = 0;
-	while (s[start + len-1] && len)
+	dest[len] = 0;
+	while (len && s[len-1])
 	{
 		len --;
-		dest[len] = s[start + len];
+		dest[len] = s[len];
 	}
 	return (dest);
 }
