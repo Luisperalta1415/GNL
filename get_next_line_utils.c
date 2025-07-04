@@ -43,14 +43,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 
 	if (!s1 && !s2)
-		return(NULL);
+		return (NULL);
 	if (!s1)
-		return(ft_strdup(s2));
-
+		return (ft_strdup(s2));
 	len = ft_strlen(s1) + ft_strlen(s2);
 	dest = (char *) malloc ((len +1) * sizeof (char));
 	if (!dest)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (s1[i])
@@ -62,6 +61,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (dest);
 }
+
 char	*ft_substr(char *s, int len)
 {
 	char	*dest;
@@ -70,7 +70,7 @@ char	*ft_substr(char *s, int len)
 	if (!dest)
 		return (NULL);
 	dest[len] = 0;
-	while (len && s[len-1])
+	while (len && s[len - 1])
 	{
 		len --;
 		dest[len] = s[len];
@@ -92,4 +92,3 @@ char	*ft_strdup(const char *s)
 		str[len] = s[len];
 	return (str);
 }
-// Por qué no puedo usar memchr, (bloques de memoria?)

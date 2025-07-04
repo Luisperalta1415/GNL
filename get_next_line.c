@@ -12,33 +12,70 @@
 
 #include "get_next_line.h"
 
+char	*ft_read_loop(int fd, char **res, char *buffer)
+{
+	int	bytes_read;
+
+	bytes_read = 1;
+	while (!ft_strchr(*res) && bytes_read != 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+		{
+			if (*res)
+			{
+				free(*res);
+				*res = NULL;
+			}
+			return (NULL);
+		}
+		if (bytes_read == 0)
+			break ;
+		buffer[bytes_read] = '\0';
+		*res = ft_strjoin(*res, buffer);
+	}
+	return (*res);
+}
+
+char	*ft_file_read(char **res, int fd)
+{
+	char		*buffer;
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	if (!ft_read_loop(fd, res, buffer))
+	{
+		free(buffer);
+		return (NULL);
+	}
+	free (buffer);
+	return (*res);
+}
+
 char	*ft_extract_line(char *res)
 {
 	int		i;
-	char	*line;
 
 	if (!res || !*res)
 		return (NULL);
-	if (!ft_strchr(res) && res && *res)
-	{
-		line = ft_strdup(res);
-		free(res);
-		return (line);
-	}
+	if (!ft_strchr(res))
+		return (ft_strdup(res));
 	i = 0;
 	while (res[i] && res[i] != '\n')
 		i++;
 	if (res[i] == '\n')
 		i++;
-	line = ft_substr(res, i);
-	return (line);
+	return (ft_substr(res, i));
 }
 
-char	*ft_save(char *res)
+char	*ft_clean_static(char *res)
 {
 	int		i;
 	char	*save;
 
+	if (!res)
+		return (NULL);
 	i = 0;
 	while (res[i] && res[i] != '\n')
 		i++;
@@ -49,7 +86,7 @@ char	*ft_save(char *res)
 	}
 	save = ft_strdup(res + i + 1);
 	free(res);
-	if(save && save[0] == 0)
+	if (save && save[0] == '\0')
 	{
 		free(save);
 		save = NULL;
@@ -60,30 +97,18 @@ char	*ft_save(char *res)
 char	*get_next_line(int fd)
 {
 	static char	*res;
-	char		*buffer;
 	char		*line;
-	int			bytes_read;
 
-	if ((BUFFER_SIZE <= 0) || (fd <= 0))
-		return(NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	while (!ft_strchr(res))
-	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			return (free(buffer),NULL);
-		buffer[bytes_read] = '\0';
-		res = ft_strjoin(res, buffer);
-	}
+	if (!ft_file_read(&res, fd))
+		return (NULL);
 	line = ft_extract_line(res);
-	res = ft_save(res);
-	free (buffer);
+	res = ft_clean_static(res);
 	return (line);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	int		fd;
 	char	*prueba;
@@ -104,4 +129,4 @@ int	main(void)
 	}
 	close(fd);
 	return (0);
-}
+}*/
